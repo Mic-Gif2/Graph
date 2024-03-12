@@ -1,0 +1,42 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+from PIL import Image
+import io
+
+# Load the image to extract the data since there's no data file provided.
+img_path = '/mnt/data/image.png'
+img = Image.open(img_path)
+
+# Assuming the bars are sorted and there are no values on the bars,
+# let's assign arbitrary values that match the visual proportions of the bars.
+# These values are guesses since the exact values are not readable from the image.
+# The user can provide exact values if needed.
+values = {
+    'Seed': 900,
+    'Series A': 1000,
+    'Series B': 700,
+    'Series C': 400,
+    'Series D': 200,
+    'Series E': 100,
+    'Series F': 50,
+    'Series G': 25,
+    'Series H': 10
+}
+
+# Create a DataFrame
+df = pd.DataFrame(list(values.items()), columns=['Funding Stage', 'Frequency'])
+
+# Plotting the new bar graph with the specified color map 'Aqua,Accent,5'
+# This color map is not available in matplotlib, but we can use Accent and select 5 different colors
+colors = plt.get_cmap('Accent').colors[:5]
+
+fig, ax = plt.subplots()
+bars = ax.bar(df['Funding Stage'], df['Frequency'], color=colors)
+ax.set_title('Frequency of Start-ups per Funding Stage')
+
+# Save the new plot
+output_path = '/mnt/data/updated_bar_graph.png'
+plt.savefig(output_path)
+plt.close()
+
+output_path
